@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="theme-color" content="#17352f">
+    <meta name="msapplication-TileColor" content="#17352f">
+    <meta name="description" content="大语言模型入门：理解 Token、Transformer、预训练、指令微调、对齐与推理。">
+
+
+
+
+    <meta name="keywords" content="Life, Code, Game">
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+
+
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/web-app-manifest-192x192.png">
+
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/web-app-manifest-192x192.png">
+
+
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/web-app-manifest-512x512.png">
+
+
+    <link rel="mask-icon" href="/favicons/favicon.svg" color="#33363b">
+
+
+    <link rel="manifest" href="/favicons/site.webmanifest">
+
+
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+
+
+    <link rel="alternate" href="/atom.xml" title="Game & Coding" type="application/atom+xml" />
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+
+
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+
+
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-dark.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+
+
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+
+
+
+
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" aria-label=\"复制\"><i class=\"far fa-copy\"></i></button>",
+              "</div>",
+              "<div class=\"titlebar-center\">",
+                "code",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" aria-label=\"复制\"><i class=\"far fa-copy\"></i></button>",
+              "</div>",
+              "<div class=\"titlebar-center\">",
+                "code",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "<i class=\"far fa-check-square\"></i>";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "<i class=\"far fa-copy\"></i>";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>大语言模型入门：从 Transformer 到对齐 | Changhao Ju · Personal Website</title>
+  <meta name="generator" content="Hexo 7.3.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">Game & Coding</a></h1>
+        <h2 class="subtitle">随便写写</h2>
+      </div>
+
+      <div class="logo">
+        <img src="/images/background2.jpg" alt="logo">
+      </div>
+
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+
+        <li role="menuitem"><a href="/archives/"><i class="fas fa-archive"></i><span class="menu-text">归档</span></a></li>
+
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+
+        <li role="menuitem"><a href="/tags/"><i class="fas fa-tags"></i><span class="menu-text">标签</span></a></li>
+
+        <li role="menuitem"><a href="/about/"><i class="fas fa-user-edit"></i><span class="menu-text">关于</span></a></li>
+
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+
+<div id="post" class="page">
+
+  <article class="article post card" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="https://MarkusJu233.github.io/2026/03/22/llm-introduction/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="Changhao Ju">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/selfish1.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="Game & Coding">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">大语言模型入门：从 Transformer 到对齐</h1>
+      <div class="post-meta">
+
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2026-03-22T12:00:00+08:00">2026-03-22</time></span>
+        </span>
+
+
+
+        <span class="post-meta-divider divider">|</span>
+
+        <span class="post-categories">
+
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ai/" itemprop="url" rel="index"><span itemprop="name">AI</span></a></span>
+        </span>
+
+
+      </div>
+    </header>
+    <main class="post-main learning-note" itemprop="articleBody">
+      <section class="article-intro">
+        <p class="article-kicker">LLM / INTRODUCTION</p>
+        <p>大语言模型并不是一个装满答案的数据库。更准确地说，它是一个根据已有上下文预测下一个 Token 的概率模型。规模、数据和训练方法让这个简单目标产生了翻译、问答、写代码与多步推理等复杂能力。</p>
+      </section>
+
+      <h2 id="从一句话开始"><a href="#从一句话开始" class="headerlink" title="从一句话开始"></a>从一句话开始</h2>
+      <p>给定一段文本 <code>x₁, x₂, …, xₜ</code>，语言模型学习的是下一个 Token 的条件概率：</p>
+      <div class="math-block">P(x₁, …, xₙ) = ∏ P(xₜ | x₁, …, xₜ₋₁)</div>
+      <p>生成时，模型先计算词表中每个候选 Token 的概率，再按一定策略选择一个，将它接到上下文末尾并继续预测。聊天、续写和代码补全，本质上都可以还原为这个循环。</p>
+      <p>“大”主要体现在三个方面：参数量大、训练数据多、计算量高。参数并不直接保存一条条句子，而是把语言中的统计关系压缩进神经网络权重。</p>
+
+      <h2 id="文本如何进入模型"><a href="#文本如何进入模型" class="headerlink" title="文本如何进入模型"></a>文本如何进入模型</h2>
+      <div class="concept-grid">
+        <article><span>01</span><h3>Tokenization</h3><p>分词器把文本切成 Token，并映射成整数 ID。Token 可能是一个汉字、单词片段、标点或特殊符号。</p></article>
+        <article><span>02</span><h3>Embedding</h3><p>每个 ID 被转换为连续向量。语义或用法相近的 Token，经过训练后通常会形成相近的表示。</p></article>
+        <article><span>03</span><h3>Position</h3><p>注意力本身不包含顺序概念，因此还需要位置编码，让模型区分“猫追狗”和“狗追猫”。</p></article>
+      </div>
+      <p>分词方式会影响序列长度、计算成本和多语言表现。模型看到的不是原始字符串，而是一串 Token ID 及其向量表示。</p>
+
+      <h2 id="Transformer-做了什么"><a href="#Transformer-做了什么" class="headerlink" title="Transformer 做了什么"></a>Transformer 做了什么</h2>
+      <p>现代 LLM 大多采用 Decoder-Only Transformer。它反复堆叠注意力层和前馈网络，让序列中的每个位置汇总与当前预测相关的信息。</p>
+      <h3 id="自注意力"><a href="#自注意力" class="headerlink" title="自注意力"></a>自注意力</h3>
+      <p>同一组输入会被投影成 Query、Key 和 Value。Query 与各个 Key 的相似度决定应该从哪些 Value 中读取更多信息：</p>
+      <div class="math-block">Attention(Q, K, V) = softmax(QKᵀ / √dₖ) V</div>
+      <p>例如，在处理“它”时，某些注意力头可能更多关注前文中的实体；处理代码括号时，另一些头可能关注对应的结构位置。多头注意力允许模型同时学习不同类型的关系。</p>
+      <h3 id="因果掩码"><a href="#因果掩码" class="headerlink" title="因果掩码"></a>因果掩码</h3>
+      <p>训练 Decoder-Only 模型时，第 <code>t</code> 个位置不能看到未来 Token，否则预测任务就失去了意义。因果掩码将右侧信息遮住，使训练过程与实际生成保持一致。</p>
+
+      <h2 id="训练流程"><a href="#训练流程" class="headerlink" title="训练流程"></a>从会续写到会对话</h2>
+      <div class="learning-flow" aria-label="大语言模型训练流程">
+        <div><strong>01</strong><span>Pre-training</span><p>在大规模语料上进行下一个 Token 预测，学习语言、知识和基本能力。</p></div>
+        <div><strong>02</strong><span>Supervised Fine-tuning</span><p>使用指令—回答样本，让基础模型学会遵循任务格式和对话习惯。</p></div>
+        <div><strong>03</strong><span>Preference Alignment</span><p>利用人类或规则偏好优化回答，使输出更有帮助、更安全且更符合预期。</p></div>
+      </div>
+      <p>预训练得到的是 Base Model；指令微调得到更适合交互的模型；偏好对齐常见方法包括 RLHF、DPO 等。三阶段解决的问题不同，不能简单地把“对话能力”全部归因于参数规模。</p>
+      <p>当算力有限时，LoRA、QLoRA 等参数高效微调方法只训练少量新增参数，从而降低显存和存储成本。</p>
+
+      <h2 id="模型如何生成答案"><a href="#模型如何生成答案" class="headerlink" title="模型如何生成答案"></a>模型如何生成答案</h2>
+      <p>模型输出的是概率分布，解码策略决定如何从分布中选 Token：</p>
+      <table class="note-table"><thead><tr><th>策略</th><th>特点</th><th>适合场景</th></tr></thead><tbody>
+        <tr><td>Greedy</td><td>每次选择概率最高的 Token，稳定但容易重复</td><td>确定性任务、简单抽取</td></tr>
+        <tr><td>Temperature</td><td>调整概率分布的平滑程度</td><td>控制保守或发散程度</td></tr>
+        <tr><td>Top-k / Top-p</td><td>只在高概率候选集合中采样</td><td>对话、创作与开放式生成</td></tr>
+      </tbody></table>
+      <p>推理速度还会受到上下文长度、KV Cache、批处理和量化方式影响。上下文越长，模型可利用的信息越多，但计算与显存成本也随之增加。</p>
+
+      <h2 id="能力边界"><a href="#能力边界" class="headerlink" title="能力边界"></a>能力与边界</h2>
+      <ul>
+        <li><strong>生成不等于检索：</strong>模型按概率生成文本，可能产生语法通顺但事实错误的内容。</li>
+        <li><strong>上下文不等于长期记忆：</strong>窗口外的信息不会自动保留，需要借助检索、数据库或外部记忆系统。</li>
+        <li><strong>语言能力不等于环境行动：</strong>要完成长期任务，还需要工具调用、状态管理、规划和反馈机制。</li>
+        <li><strong>规模不自动保证可靠：</strong>评测集、数据分布与提示方式都会影响观察到的能力。</li>
+      </ul>
+      <p>RAG 通过检索外部资料补充上下文，Agent 通过工具与环境交互；它们扩展了模型的使用方式，但不会从根本上消除错误。</p>
+
+      <h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>建议的学习顺序</h2>
+      <ol>
+        <li>理解 Token、Embedding 与下一个 Token 预测。</li>
+        <li>推导一次缩放点积注意力，并实现一个最小 Transformer Block。</li>
+        <li>区分 Encoder-Only、Encoder-Decoder 和 Decoder-Only。</li>
+        <li>训练一个小型语言模型，完整经历数据处理、预训练和指令微调。</li>
+        <li>再进入 LoRA、RAG、Agent、对齐与评测等应用主题。</li>
+      </ol>
+
+      <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2>
+      <p>本文的知识结构主要参考 Datawhale 的 <a href="https://github.com/datawhalechina/happy-llm" target="_blank" rel="noopener noreferrer">Happy-LLM：从零开始构建大模型</a>，并按“建立整体地图”的目标重新组织。希望继续动手实践，可以沿着其 Transformer、预训练、微调、RAG 与 Agent 章节学习。</p>
+
+    </main>
+    <footer class="post-footer">
+
+      <div class="post-tags">
+
+        <a class="post-tag button" href="/tags/llm/" rel="tag"><i class="fas fa-tags"></i>LLM</a>
+        <a class="post-tag button" href="/tags/ai/" rel="tag"><i class="fas fa-tags"></i>AI</a>
+
+      </div>
+
+    </footer>
+  </article>
+
+
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+
+    </div>
+    <div class="page-nav-prev page-nav-item">
+
+      <a href="/2026/03/15/rl-introduction/" rel="prev" title="强化学习入门"><span class="nav-title">下一篇：强化学习入门</span><i class="fas fa-angle-right"></i></a>
+
+    </div>
+  </nav>
+
+
+</div>
+
+          </div>
+
+
+
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+
+
+<div class="info sidebar-item" id="info">
+
+  <img class="author-avatar" src="/images/selfish1.jpg" alt="Markus">
+
+  <h1 class="author-name">Markus</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+
+
+
+
+    <div class="archives-count count-block">
+      <div class="site-count-title">归档</div>
+      <div><a href="/archives/">6</a></div>
+    </div>
+
+
+
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">3</a></div>
+    </div>
+
+
+
+    <div class="tags-count count-block">
+      <div class="site-count-title">标签</div>
+      <div><a href="/tags/">2</a></div>
+    </div>
+
+
+
+
+  </div>
+
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+
+</div>
+
+
+  <div class="sidebar-sticky">
+
+
+
+
+
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E4%BB%8E%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%BC%80%E5%A7%8B"><span class="toc-text">从一句话开始</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%96%87%E6%9C%AC%E5%A6%82%E4%BD%95%E8%BF%9B%E5%85%A5%E6%A8%A1%E5%9E%8B"><span class="toc-text">文本如何进入模型</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Transformer-%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-text">Transformer 做了什么</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B"><span class="toc-text">从会续写到会对话</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%A8%A1%E5%9E%8B%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E7%AD%94%E6%A1%88"><span class="toc-text">模型如何生成答案</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E8%83%BD%E5%8A%9B%E8%BE%B9%E7%95%8C"><span class="toc-text">能力与边界</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF"><span class="toc-text">学习路线</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol></div>
+    </div>
+
+
+
+
+  </div>
+</aside>
+
+
+
+        </div>
+      </div>
+    </main>
+
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">Markus</span><span class="year"><i class="far fa-copyright"></i>2024 - 2025</span>
+        </div>
+
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  </body>
+</html>

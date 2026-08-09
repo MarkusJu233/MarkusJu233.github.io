@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="theme-color" content="#17352f">
+    <meta name="msapplication-TileColor" content="#17352f">
+    <meta name="description" content="强化学习入门：从智能体—环境交互、MDP 与价值函数，到 Q-learning、策略梯度和 Actor-Critic。">
+
+
+
+
+    <meta name="keywords" content="Life, Code, Game">
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+
+
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/web-app-manifest-192x192.png">
+
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/web-app-manifest-192x192.png">
+
+
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/web-app-manifest-512x512.png">
+
+
+    <link rel="mask-icon" href="/favicons/favicon.svg" color="#33363b">
+
+
+    <link rel="manifest" href="/favicons/site.webmanifest">
+
+
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+
+
+    <link rel="alternate" href="/atom.xml" title="Game & Coding" type="application/atom+xml" />
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+
+
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+
+
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-dark.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+
+
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+
+
+
+
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" aria-label=\"复制\"><i class=\"far fa-copy\"></i></button>",
+              "</div>",
+              "<div class=\"titlebar-center\">",
+                "code",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" aria-label=\"复制\"><i class=\"far fa-copy\"></i></button>",
+              "</div>",
+              "<div class=\"titlebar-center\">",
+                "code",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "<i class=\"far fa-check-square\"></i>";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "<i class=\"far fa-copy\"></i>";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>强化学习入门：从 MDP 到 Actor-Critic | Changhao Ju · Personal Website</title>
+  <meta name="generator" content="Hexo 7.3.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">Game & Coding</a></h1>
+        <h2 class="subtitle">随便写写</h2>
+      </div>
+
+      <div class="logo">
+        <img src="/images/background2.jpg" alt="logo">
+      </div>
+
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+
+        <li role="menuitem"><a href="/archives/"><i class="fas fa-archive"></i><span class="menu-text">归档</span></a></li>
+
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+
+        <li role="menuitem"><a href="/tags/"><i class="fas fa-tags"></i><span class="menu-text">标签</span></a></li>
+
+        <li role="menuitem"><a href="/about/"><i class="fas fa-user-edit"></i><span class="menu-text">关于</span></a></li>
+
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+
+<div id="post" class="page">
+
+  <article class="article post card" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="https://MarkusJu233.github.io/2026/03/15/rl-introduction/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="Changhao Ju">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/selfish1.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="Game & Coding">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">强化学习入门：从 MDP 到 Actor-Critic</h1>
+      <div class="post-meta">
+
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2026-03-15T11:30:00+08:00">2026-03-15</time></span>
+        </span>
+
+
+
+        <span class="post-meta-divider divider">|</span>
+
+        <span class="post-categories">
+
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ai/" itemprop="url" rel="index"><span itemprop="name">AI</span></a></span>
+        </span>
+
+
+      </div>
+    </header>
+    <main class="post-main learning-note" itemprop="articleBody">
+      <section class="article-intro">
+        <p class="article-kicker">REINFORCEMENT LEARNING / INTRODUCTION</p>
+        <p>强化学习研究的是一个序列决策问题：智能体不断观察环境、选择动作、获得反馈，并据此改进策略。与有标准答案的监督学习不同，强化学习通常只知道一次行为带来了多少奖励。</p>
+      </section>
+
+      <h2 id="智能体与环境"><a href="#智能体与环境" class="headerlink" title="智能体与环境"></a>智能体—环境循环</h2>
+      <div class="rl-loop" aria-label="强化学习交互循环">
+        <div><strong>Agent</strong><span>根据状态选择动作 aₜ</span></div>
+        <div class="rl-arrow">action →<br>← state, reward</div>
+        <div><strong>Environment</strong><span>转移到新状态 sₜ₊₁，并返回奖励 rₜ</span></div>
+      </div>
+      <p>监督学习关心“这个样本的正确标签是什么”；强化学习关心“现在采取什么动作，才能让未来的累计回报更高”。一个动作的价值可能要经过很多步才显现，这就是信用分配问题。</p>
+
+      <h2 id="MDP"><a href="#MDP" class="headerlink" title="马尔可夫决策过程"></a>用 MDP 描述任务</h2>
+      <p>马尔可夫决策过程（Markov Decision Process，MDP）通常写成五元组：</p>
+      <div class="math-block">M = (S, A, P, R, γ)</div>
+      <ul>
+        <li><strong>S：</strong>状态空间，描述智能体当前掌握的环境信息。</li>
+        <li><strong>A：</strong>动作空间，智能体可以执行的选择。</li>
+        <li><strong>P：</strong>状态转移概率 <code>P(s'|s,a)</code>。</li>
+        <li><strong>R：</strong>奖励函数，定义局部反馈。</li>
+        <li><strong>γ：</strong>折扣因子，控制当前奖励与长期奖励的权衡。</li>
+      </ul>
+      <p>马尔可夫性意味着：在状态定义充分的前提下，下一时刻只依赖当前状态和动作，而不需要完整历史。实际任务往往只能得到部分观测，此时问题会扩展为 POMDP。</p>
+
+      <h2 id="回报与策略"><a href="#回报与策略" class="headerlink" title="回报与策略"></a>回报、策略与优化目标</h2>
+      <p>从时刻 <code>t</code> 开始的折扣回报定义为：</p>
+      <div class="math-block">Gₜ = rₜ + γrₜ₊₁ + γ²rₜ₊₂ + …</div>
+      <p>策略 <code>π(a|s)</code> 给出在状态 <code>s</code> 下选择动作 <code>a</code> 的概率。强化学习的目标，是找到能够最大化期望累计回报的策略。</p>
+      <div class="article-callout"><strong>奖励不是目标本身。</strong><p>奖励只是我们写给智能体的目标代理。如果奖励设计遗漏了约束，智能体可能找到高奖励但不符合真实意图的行为，即常说的 reward hacking。</p></div>
+
+      <h2 id="价值函数"><a href="#价值函数" class="headerlink" title="价值函数"></a>价值函数与 Bellman 递推</h2>
+      <p>状态价值 <code>Vπ(s)</code> 表示从状态 <code>s</code> 出发、之后遵循策略 <code>π</code> 时的期望回报；动作价值 <code>Qπ(s,a)</code> 还额外指定了第一步动作。</p>
+      <div class="math-block">Qπ(s,a) = E[rₜ + γ Vπ(sₜ₊₁) | sₜ=s, aₜ=a]</div>
+      <p>Bellman 方程把一个长期问题拆成“当前奖励 + 下一状态的价值”。动态规划、时序差分学习和许多深度强化学习算法，都建立在这种递推关系上。</p>
+
+      <h2 id="三条算法路线"><a href="#三条算法路线" class="headerlink" title="三条算法路线"></a>三条主要算法路线</h2>
+      <div class="concept-grid">
+        <article><span>01</span><h3>Value-based</h3><p>学习状态或动作价值，再选择价值最大的动作。代表方法：Q-learning、DQN。</p></article>
+        <article><span>02</span><h3>Policy-based</h3><p>直接参数化策略并对期望回报求梯度。代表方法：REINFORCE、PPO。</p></article>
+        <article><span>03</span><h3>Actor-Critic</h3><p>Actor 更新策略，Critic 评估动作，把前两条路线结合起来。代表方法：A2C、SAC、DDPG。</p></article>
+      </div>
+      <table class="note-table"><thead><tr><th>路线</th><th>优势</th><th>典型限制</th></tr></thead><tbody>
+        <tr><td>Value-based</td><td>样本利用率较高，离散动作直观</td><td>难以直接处理连续动作</td></tr>
+        <tr><td>Policy-based</td><td>适合随机策略与连续动作</td><td>梯度方差较大，训练可能不稳定</td></tr>
+        <tr><td>Actor-Critic</td><td>兼顾策略表达和价值估计</td><td>组件更多，偏差与稳定性需要权衡</td></tr>
+      </tbody></table>
+
+      <h2 id="Q-learning"><a href="#Q-learning" class="headerlink" title="Q-learning"></a>一个具体例子：Q-learning</h2>
+      <p>Q-learning 使用交互数据迭代更新动作价值：</p>
+      <div class="math-block">Q(s,a) ← Q(s,a) + α[r + γ maxₐ'Q(s',a') − Q(s,a)]</div>
+      <p>方括号中的部分叫 TD Error：当前估计与一步之后目标之间的差。表格型 Q-learning 直接维护每个状态—动作对的数值；DQN 则用神经网络近似 Q 函数，并引入经验回放与目标网络缓解训练不稳定。</p>
+      <p>Q-learning 是 off-policy 方法，因为更新目标使用“下一步最大价值动作”，不要求它就是采样数据时真正执行的动作；Sarsa 则使用实际执行的下一动作进行更新，是典型 on-policy 方法。</p>
+
+      <h2 id="策略梯度"><a href="#策略梯度" class="headerlink" title="策略梯度"></a>直接优化策略</h2>
+      <p>策略梯度不先求出最优动作价值表，而是调整策略参数 <code>θ</code>，提高高回报动作出现的概率：</p>
+      <div class="math-block">∇θ J(θ) = E[∇θ log πθ(a|s) · A(s,a)]</div>
+      <p><code>A(s,a)</code> 是优势函数，表示某个动作相比当前状态的平均水平好多少。Critic 负责估计价值或优势，Actor 根据这个信号更新策略。PPO 进一步限制单次策略更新幅度，是目前较常用且相对稳定的策略优化算法。</p>
+
+      <h2 id="探索与利用"><a href="#探索与利用" class="headerlink" title="探索与利用"></a>探索与利用</h2>
+      <p>如果只选择当前认为最好的动作，智能体可能永远发现不了更优路线；如果一直随机探索，又无法稳定获得收益。常见方法包括 ε-greedy、熵正则化、参数噪声与基于不确定性的探索。</p>
+      <p>稀疏奖励环境尤其困难：智能体可能在很长时间内得不到任何有效反馈。奖励塑形、模仿学习、课程学习和世界模型都可以改善这个问题，但也会引入新的偏差。</p>
+
+      <h2 id="RL与LLM"><a href="#RL%E4%B8%8ELLM" class="headerlink" title="强化学习与大语言模型"></a>强化学习与大语言模型</h2>
+      <p>在 LLM 中，模型生成的 Token 序列可以看作动作，已有文本是状态，偏好模型或可验证结果提供奖励。RLHF、PPO、GRPO 等方法用强化学习信号调整生成策略。</p>
+      <p>但语言模型的动作空间巨大、序列很长，奖励也常常不完整。如何可靠评估中间步骤、减少奖励投机，并让模型在真实工具环境中学习，是 Agentic RL 的核心难点。</p>
+
+      <h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>建议的学习顺序</h2>
+      <ol>
+        <li>先理解 MDP、回报、策略、状态价值与动作价值。</li>
+        <li>在 GridWorld 中手写动态规划、蒙特卡洛、Sarsa 和 Q-learning。</li>
+        <li>理解函数近似后实现 DQN，观察经验回放和目标网络的作用。</li>
+        <li>学习策略梯度与 Actor-Critic，再进入 PPO、SAC 等算法。</li>
+        <li>最后研究离线强化学习、模仿学习、世界模型或 Agentic RL。</li>
+      </ol>
+
+      <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2>
+      <p>本文主要参考 Datawhale 的 <a href="https://datawhalechina.github.io/easy-rl/" target="_blank" rel="noopener noreferrer">Easy-RL（蘑菇书）</a> 与其 <a href="https://github.com/datawhalechina/easy-rl" target="_blank" rel="noopener noreferrer">GitHub 仓库</a>，按概念地图重新组织。Easy-RL 还包含 DQN、PPO、DDPG、模仿学习等章节与配套代码，适合继续系统学习。</p>
+
+    </main>
+    <footer class="post-footer">
+
+      <div class="post-tags">
+
+        <a class="post-tag button" href="/tags/rl/" rel="tag"><i class="fas fa-tags"></i>RL</a>
+        <a class="post-tag button" href="/tags/ai/" rel="tag"><i class="fas fa-tags"></i>AI</a>
+
+      </div>
+
+    </footer>
+  </article>
+
+
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      <a href="/2026/03/22/llm-introduction/" rel="next" title="大语言模型入门"><i class="fas fa-angle-left"></i><span class="nav-title">上一篇：大语言模型入门</span></a>
+    </div>
+    <div class="page-nav-prev page-nav-item">
+
+      <a href="/2025/06/25/os-challenge-shell/" rel="prev" title="os_challenge_shell"><span class="nav-title">下一篇：os_challenge_shell</span><i class="fas fa-angle-right"></i></a>
+
+    </div>
+  </nav>
+
+
+</div>
+
+          </div>
+
+
+
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+
+
+<div class="info sidebar-item" id="info">
+
+  <img class="author-avatar" src="/images/selfish1.jpg" alt="Markus">
+
+  <h1 class="author-name">Markus</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+
+
+
+
+    <div class="archives-count count-block">
+      <div class="site-count-title">归档</div>
+      <div><a href="/archives/">6</a></div>
+    </div>
+
+
+
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">3</a></div>
+    </div>
+
+
+
+    <div class="tags-count count-block">
+      <div class="site-count-title">标签</div>
+      <div><a href="/tags/">2</a></div>
+    </div>
+
+
+
+
+  </div>
+
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+
+</div>
+
+
+  <div class="sidebar-sticky">
+
+
+
+
+
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%99%BA%E8%83%BD%E4%BD%93%E4%B8%8E%E7%8E%AF%E5%A2%83"><span class="toc-text">智能体—环境循环</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#MDP"><span class="toc-text">用 MDP 描述任务</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%9B%9E%E6%8A%A5%E4%B8%8E%E7%AD%96%E7%95%A5"><span class="toc-text">回报、策略与目标</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0"><span class="toc-text">价值函数</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E4%B8%89%E6%9D%A1%E7%AE%97%E6%B3%95%E8%B7%AF%E7%BA%BF"><span class="toc-text">三条算法路线</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Q-learning"><span class="toc-text">Q-learning</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6"><span class="toc-text">策略梯度</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%88%A9%E7%94%A8"><span class="toc-text">探索与利用</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#RL%E4%B8%8ELLM"><span class="toc-text">强化学习与 LLM</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF"><span class="toc-text">学习路线</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol></div>
+    </div>
+
+
+
+
+  </div>
+</aside>
+
+
+
+        </div>
+      </div>
+    </main>
+
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">Markus</span><span class="year"><i class="far fa-copyright"></i>2024 - 2025</span>
+        </div>
+
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  </body>
+</html>

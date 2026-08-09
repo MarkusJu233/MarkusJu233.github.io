@@ -1,20 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Game &amp; Coding</title>
+  <title>Changhao Ju · Personal Website</title>
   
-  <subtitle>随便写写</subtitle>
-  <link href="http://juchnaghao.github.io/atom.xml" rel="self"/>
+  <subtitle>Research notes and technical writing</subtitle>
+  <link href="https://MarkusJu233.github.io/atom.xml" rel="self"/>
   
-  <link href="http://juchnaghao.github.io/"/>
-  <updated>2025-07-01T06:28:35.896Z</updated>
-  <id>http://juchnaghao.github.io/</id>
+  <link href="https://MarkusJu233.github.io/"/>
+  <updated>2026-03-22T04:00:00.000Z</updated>
+  <id>https://MarkusJu233.github.io/</id>
   
   <author>
-    <name>Markus</name>
+    <name>Changhao Ju</name>
     
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  <entry>
+    <title>大语言模型入门：从 Transformer 到对齐</title>
+    <link href="https://MarkusJu233.github.io/2026/03/22/llm-introduction/"/>
+    <id>https://MarkusJu233.github.io/2026/03/22/llm-introduction/</id>
+    <published>2026-03-22T04:00:00.000Z</published>
+    <updated>2026-03-22T04:00:00.000Z</updated>
+    <summary type="html">从下一个 Token 预测出发，理解 Transformer、预训练、指令微调、偏好对齐与推理解码。</summary>
+    <category term="AI" scheme="https://MarkusJu233.github.io/categories/ai/"/>
+    <category term="LLM" scheme="https://MarkusJu233.github.io/tags/llm/"/>
+  </entry>
+  <entry>
+    <title>强化学习入门：从 MDP 到 Actor-Critic</title>
+    <link href="https://MarkusJu233.github.io/2026/03/15/rl-introduction/"/>
+    <id>https://MarkusJu233.github.io/2026/03/15/rl-introduction/</id>
+    <published>2026-03-15T03:30:00.000Z</published>
+    <updated>2026-03-15T03:30:00.000Z</updated>
+    <summary type="html">从智能体—环境交互开始，梳理 MDP、价值函数、Q-learning、策略梯度与 Actor-Critic。</summary>
+    <category term="AI" scheme="https://MarkusJu233.github.io/categories/ai/"/>
+    <category term="RL" scheme="https://MarkusJu233.github.io/tags/rl/"/>
+  </entry>
   
   <entry>
     <title>os_challenge_shell</title>

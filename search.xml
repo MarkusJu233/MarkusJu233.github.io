@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search> 
+  <entry>
+    <title>大语言模型入门：从 Transformer 到对齐</title>
+    <link href="/2026/03/22/llm-introduction/"/>
+    <url>/2026/03/22/llm-introduction/</url>
+    <content type="html"><![CDATA[<p>从下一个 Token 预测出发，理解分词、Embedding、Transformer、预训练、指令微调、偏好对齐与推理解码。</p>]]></content>
+    <categories><category> AI </category></categories>
+    <tags><tag> LLM </tag><tag> AI </tag></tags>
+  </entry>
+  <entry>
+    <title>强化学习入门：从 MDP 到 Actor-Critic</title>
+    <link href="/2026/03/15/rl-introduction/"/>
+    <url>/2026/03/15/rl-introduction/</url>
+    <content type="html"><![CDATA[<p>从智能体—环境交互开始，梳理 MDP、价值函数、Q-learning、策略梯度、Actor-Critic 与强化学习在 LLM 中的应用。</p>]]></content>
+    <categories><category> AI </category></categories>
+    <tags><tag> RL </tag><tag> AI </tag></tags>
+  </entry>
   
   
     
