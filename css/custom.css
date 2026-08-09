@@ -344,7 +344,9 @@ input:focus-visible {
   position: relative;
   z-index: 1;
   align-self: center;
+  min-width: 0;
   margin: 3rem 3rem 3rem 0;
+  overflow: hidden;
 }
 
 .portrait-frame {
@@ -378,19 +380,6 @@ input:focus-visible {
   font-size: 0.58rem;
   font-weight: 700;
   letter-spacing: 0.12em;
-}
-
-.portrait-mark {
-  position: absolute;
-  top: -2.2rem;
-  right: -1.25rem;
-  display: grid;
-  width: 4.7rem;
-  height: 4.7rem;
-  place-items: center;
-  color: var(--paper-light);
-  background: var(--orange);
-  font: 500 1.2rem/1 var(--serif);
 }
 
 .signal-strip {
@@ -1247,7 +1236,6 @@ body:not(.home-page):not(.about-page) .sidebar {
   .hero-lead { font-size: 0.9rem; }
   .hero-portrait { order: 2; margin: 0; }
   .portrait-frame { height: 58vh; min-height: 390px; max-height: 520px; }
-  .portrait-mark { top: -1.25rem; right: 1rem; bottom: auto; }
   .hero-portrait figcaption { padding: 0.85rem 1.5rem 0; }
   .signal-strip { grid-template-columns: 1fr 1fr; }
   .signal-strip > div { min-height: 110px; padding: 0 1.5rem; border-bottom: 1px solid rgba(255,255,255,.14); }
