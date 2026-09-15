@@ -28,8 +28,9 @@
     // 40 is total size and 0.4 is scroll bar size.
     // jQuery won't calculate scroll bar size. But CSS will.
     var minWidth = Math.round((40 - 0.4) * 16);
+    var useCollapsibleMenu = !document.body.classList.contains("home-page");
     // Auto hide main nav menus in small screen.
-    if ($(window).width() <= minWidth) {
+    if (useCollapsibleMenu && $(window).width() <= minWidth) {
       $("#menu").hide();
       $("#menu").attr("aria-hidden", "true");
       $("#nav-toggle").attr("aria-hidden", "false");
@@ -37,6 +38,7 @@
     var windowWidth = $(window).width();
     // Show menu again when window becomes bigger.
     $(window).resize(function () {
+      if (!useCollapsibleMenu) return;
       if ($(window).width() > minWidth) {
         $("#menu").show();
         $("#menu").attr("aria-hidden", "false");

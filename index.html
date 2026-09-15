@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="theme-color" content="#17352f">
-    <meta name="msapplication-TileColor" content="#17352f">
+    <meta name="theme-color" content="#101e35">
+    <meta name="msapplication-TileColor" content="#101e35">
     <meta name="description" content="琚长昊的个人主页：关注世界模型、计算机使用智能体与可靠 AI，记录研究、工程与思考。">
     
     
@@ -51,7 +51,8 @@
 <link rel="stylesheet" type="text/css" href="/css/page.css">
 <link rel="stylesheet" type="text/css" href="/css/post.css">
 
-    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom.css?v=20260916">
+    <link rel="stylesheet" type="text/css" href="/css/home.css?v=20260916">
     <link rel="stylesheet" type="text/css" href="/css/atom-one-dark.css">
     <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
     <script type="text/javascript" src="/js/jquery.min.js"></script>
@@ -84,7 +85,7 @@
     
     
     
-    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script defer type="text/javascript" src="/js/index.js?v=20260916"></script>
     <script type="text/javascript">
     $(document).ready(function () {
       var cb = null;
@@ -159,10 +160,25 @@
     });
     </script>
     
-    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <script defer type="text/javascript" src="/js/custom.js?v=20260916"></script>
+    <script defer type="text/javascript" src="/js/home.js?v=20260916.1"></script>
     <title>琚长昊 · Changhao Ju | 个人主页</title>
   <meta name="generator" content="Hexo 7.3.0"></head>
   <body class="home-page" itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    <a class="skip-link" href="#research">跳至研究经历</a>
+    <div class="depth-scene" aria-hidden="true">
+      <div class="depth-light"></div>
+      <div class="depth-rings"><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="depth-grain"></div>
+    </div>
+    <nav class="chapter-nav" aria-label="首页章节">
+      <a href="#intro" aria-label="简介" aria-current="location"><span>简介</span><i></i></a>
+      <a href="#interests" aria-label="研究方向"><span>方向</span><i></i></a>
+      <a href="#research" aria-label="研究"><span>研究</span><i></i></a>
+      <a href="#experience" aria-label="经历"><span>经历</span><i></i></a>
+      <a href="#writing" aria-label="笔记"><span>笔记</span><i></i></a>
+      <a href="#contact" aria-label="联系"><span>联系</span><i></i></a>
+    </nav>
     
 <header id="header" class="header" style="background: #33363b;">
   <div class="container">
@@ -181,13 +197,13 @@
       <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
       <ul id="menu" role="menubar" aria-hidden="false">
         
-        <li role="menuitem"><a href="/" class="current"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        <li role="menuitem"><a href="#research"><span class="menu-text">研究</span></a></li>
         
-        <li role="menuitem"><a href="/archives/"><i class="fas fa-archive"></i><span class="menu-text">归档</span></a></li>
+        <li role="menuitem"><a href="#experience"><span class="menu-text">经历</span></a></li>
         
-        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        <li role="menuitem"><a href="#writing"><span class="menu-text">笔记</span></a></li>
         
-        <li role="menuitem"><a href="/tags/"><i class="fas fa-tags"></i><span class="menu-text">标签</span></a></li>
+        <li role="menuitem" class="nav-contact"><a href="#contact"><span class="menu-text">联系</span></a></li>
         
         <li role="menuitem"><a href="/about/"><i class="fas fa-user-edit"></i><span class="menu-text">关于</span></a></li>
         
@@ -204,30 +220,33 @@
             
 
 <div id="index" class="index page">
-  <section class="home-hero" aria-labelledby="hero-title">
+  <section id="intro" class="home-hero" data-chapter aria-labelledby="hero-title">
+    <div class="hero-scene">
     <div class="hero-copy">
-      <p class="eyebrow"><span>BUAA</span> COMPUTER SCIENCE</p>
+      <p class="eyebrow">BEIHANG UNIVERSITY <span class="eyebrow-rule"></span> COMPUTER SCIENCE</p>
       <h1 id="hero-title">琚长昊<br><em>Changhao Ju</em></h1>
-      <p class="hero-lead">北京航空航天大学计算机学院本科生（2022—2027），GPA 3.85 / 4.0，专业排名 18 / 198。研究兴趣是探索通用人工智能的实现路径，现阶段主要关注世界模型、计算机使用智能体与可靠 AI。</p>
+      <p class="hero-identity">北京航空航天大学 · 计算机科学与技术</p>
+      <p class="hero-lead">研究兴趣是探索通用人工智能的实现路径。<br>关注大语言模型、世界模型与可靠 AI。</p>
       <div class="hero-actions">
-        <a class="primary-action" href="#research">研究经历 <span aria-hidden="true">↓</span></a>
-        <a class="text-action" href="#writing">技术文章 <span aria-hidden="true">↓</span></a>
-        <a class="text-action" href="mailto:jch18297499665@buaa.edu.cn">邮件联系 <span aria-hidden="true">↗</span></a>
+        <a class="primary-action" href="#research">研究经历 <span aria-hidden="true">↗</span></a>
+        <a class="text-action" href="/about/">关于我 <span aria-hidden="true">↗</span></a>
       </div>
       <div class="hero-status">
         <span class="status-dot" aria-hidden="true"></span>
-        <span>北京航空航天大学 · 计算机科学与技术 · 2022—2027</span>
+        <span>本科 · 2022—2027</span>
       </div>
     </div>
     <figure class="hero-portrait">
       <div class="portrait-frame">
-        <img src="/images/selfish1.jpg" alt="琚长昊在户外的侧身照片">
+        <img src="/images/selfish1.jpg" width="1280" height="1920" fetchpriority="high" draggable="false" alt="琚长昊在户外的侧身照片">
       </div>
       <figcaption>
-        <span>RESEARCH / ENGINEERING</span>
-        <span>BEIJING · 2026</span>
+        <span>CHANGHAO JU</span>
+        <span>BEIJING</span>
       </figcaption>
     </figure>
+    <a class="scroll-cue" href="#interests"><span class="scroll-cue-line" aria-hidden="true"></span>向下滚动 <span class="scroll-cue-en">SCROLL TO EXPLORE</span></a>
+    </div>
   </section>
 
   <section class="signal-strip" aria-label="个人概览">
@@ -237,16 +256,29 @@
     <div><strong>04</strong><span>项重要奖项</span></div>
   </section>
 
-  <section id="research" class="research-showcase reveal" aria-labelledby="research-title">
+  <section id="interests" class="lens-track" data-chapter aria-labelledby="interests-title">
+    <div class="lens-stage">
+      <div class="lens-heading"><p class="section-index">RESEARCH INTERESTS</p><h2 id="interests-title">研究兴趣</h2></div>
+      <div class="lens-orbit" aria-hidden="true"><span></span><span></span><span></span><span></span><i></i></div>
+      <div class="lens-topics">
+        <article class="lens-topic"><p>大语言模型</p><h3>LLM</h3><span>语言、知识与推理</span></article>
+        <article class="lens-topic"><p>世界模型</p><h3>World<br>Models</h3><span>环境建模、动作跟随与预测</span></article>
+        <article class="lens-topic"><p>通用人工智能</p><h3>AGI</h3><span>探索通用人工智能的实现路径</span></article>
+      </div>
+      <div class="lens-labels" aria-hidden="true"><span class="is-active">LLM</span><span>WORLD MODELS</span><span>AGI</span></div>
+    </div>
+  </section>
+
+  <section id="research" class="research-showcase" data-chapter aria-labelledby="research-title">
     <div class="section-heading">
       <div>
-        <p class="section-index">01 / SELECTED RESEARCH</p>
+        <p class="section-index">SELECTED RESEARCH</p>
         <h2 id="research-title">研究经历</h2>
       </div>
       <p>目前主要参与世界模型动作跟随与计算机使用智能体安全方向的研究，分别担任第一作者与共同一作。</p>
     </div>
 
-    <article class="research-card research-card-featured">
+    <article class="research-card research-card-featured reveal">
       <div class="research-number">R / 01</div>
       <div class="research-main">
         <div class="research-meta"><span>AAAI 2027 · UNDER REVIEW</span><span>FIRST AUTHOR</span></div>
@@ -264,7 +296,7 @@
       </div>
     </article>
 
-    <article class="research-card">
+    <article class="research-card reveal">
       <div class="research-number">R / 02</div>
       <div class="research-main">
         <div class="research-meta"><span>NEURIPS 2026 · UNDER REVIEW</span><span>CO-FIRST AUTHOR</span></div>
@@ -280,25 +312,25 @@
     </article>
   </section>
 
-  <section class="experience-grid reveal" aria-labelledby="experience-title">
+  <section id="experience" class="experience-grid" data-chapter aria-labelledby="experience-title">
     <div class="section-heading compact-heading">
       <div>
-        <p class="section-index">02 / EXPERIENCE &amp; RECOGNITION</p>
+        <p class="section-index">EXPERIENCE &amp; RECOGNITION</p>
         <h2 id="experience-title">项目经历与获奖</h2>
       </div>
     </div>
     <div class="experience-list">
-      <article>
+      <article class="reveal">
         <span class="experience-time">2025.07 — 08</span>
         <div><h3>NUS SOC Summer Workshop</h3><p>基于 YOLOv8 构建多模态宠物情感识别与姿态评估系统，项目评级 A+。</p></div>
         <span class="experience-tag">DEEP LEARNING</span>
       </article>
-      <article>
+      <article class="reveal">
         <span class="experience-time">2025.03 — 08</span>
         <div><h3>Diffusion for Time Series</h3><p>参与 Latent Diffusion 时序预测架构设计、扩展训练与评估，预测精度提升约 10%。</p></div>
         <span class="experience-tag">GENERATIVE MODEL</span>
       </article>
-      <article class="award-row">
+      <article class="award-row reveal">
         <span class="experience-time">2022 — 25</span>
         <div><h3>Honors &amp; Awards</h3><p>国家奖学金 · 数学建模北京市一等奖 · 数学竞赛北京市一等奖 · 校学习优秀奖特等奖</p></div>
         <span class="experience-tag">RECOGNITION</span>
@@ -306,9 +338,9 @@
     </div>
   </section>
 
-  <div id="writing" class="writing-heading reveal">
-    <p class="section-index">03 / NOTES FROM THE BUILD</p>
-    <div><h2>技术文章</h2><p>人工智能、操作系统与课程实践记录。</p></div>
+  <div id="writing" class="writing-heading" data-chapter>
+    <p class="section-index">NOTES &amp; THOUGHTS</p>
+    <div><h2>笔记与思考</h2><p>读论文、做项目、写代码时的一些记录。</p></div>
   </div>
   <article class="article post card" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
@@ -641,9 +673,15 @@
       
     </footer>
   </article>
-  
-  
-  
+
+  <section id="contact" class="home-contact" data-chapter aria-labelledby="contact-title">
+    <p class="section-index">GET IN TOUCH</p>
+    <h2 id="contact-title">研究交流与合作</h2>
+    <p>如果你对我的研究或项目感兴趣，欢迎通过邮件联系。</p>
+    <a class="contact-email" href="mailto:jch18297499665@buaa.edu.cn">jch18297499665@buaa.edu.cn <span aria-hidden="true">↗</span></a>
+    <div class="contact-links"><a href="/about/">个人履历 ↗</a><a href="/archives/">全部文章 ↗</a><a href="https://github.com/MarkusJu233">GitHub ↗</a></div>
+    <p class="contact-signature" aria-hidden="true">Changhao Ju</p>
+  </section>
 </div>
 
           </div>

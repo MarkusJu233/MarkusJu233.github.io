@@ -15,7 +15,7 @@
   if (brandSubtitle) brandSubtitle.textContent = "Computer Science · BUAA";
   if (sidebarName) sidebarName.textContent = "琚长昊 · Changhao";
   if (footerAuthor) footerAuthor.textContent = "Changhao Ju";
-  if (themeColor) themeColor.setAttribute("content", "#17352f");
+  if (themeColor) themeColor.setAttribute("content", "#101e35");
   if (archiveCount) archiveCount.textContent = "8";
   if (categoryCount) categoryCount.textContent = "4";
   if (tagCount) tagCount.textContent = "5";
